@@ -190,7 +190,7 @@ module Rpush
 
         def ready_for_delivery
           relation = Rpush::Client::ActiveRecord::Notification.where('processing = ? AND delivered = ? AND failed = ? AND (deliver_after IS NULL OR deliver_after < ?)', false, false, false, Time.now)
-          @using_oracle ? relation : relation.order('created_at ASC')
+          @using_oracle ? relation : relation.order('prio ASC, created_at ASC')
         end
 
         def mark_processing(notifications)
